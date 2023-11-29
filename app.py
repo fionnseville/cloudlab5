@@ -41,21 +41,38 @@ def add():
     except Exception as e:
         return '{"Result": "Error", "Message": "' + str(e) + '"}'
 
-@app.route("/update", methods=['PUT'])  # Update Student
+#@app.route("/update", methods=['PUT'])  # Update Student
+#def update():
+#    try:
+#        id = int(request.form.get('id'))
+#        name = request.json.get('name')
+#        email = request.json.get('email')
+#
+#        query = '''UPDATE students SET studentName = '{}', email = '{}' WHERE studentID = {} ;'''.format(name, email, id)
+#        print("Received Update Request. ID:", id, "Name:", name, "Email:", email)
+#        success = execute_query(query)
+#        print(success)
+#        return '{"Result": "Success"}'
+#    except Exception as e:
+#        return '{"Result": "Error", "Message": "' + str(e) + '"}'
+@app.route("/update", methods=['PUT'])
 def update():
     try:
-        id = int(request.form.get('id'))
-        name = request.json.get('name')
-        email = request.json.get('email')
+        data = request.json
+        id = int(data['id'])
+        name = data['name']
+        email = data['email']
 
         query = '''UPDATE students SET studentName = '{}', email = '{}' WHERE studentID = {} ;'''.format(name, email, id)
         print("Received Update Request. ID:", id, "Name:", name, "Email:", email)
         success = execute_query(query)
-        print(success)
-        return '{"Result": "Success"}'
+
+        if success:
+            return '{"Result": "Success"}'
+        else:
+            return '{"Result": "Error"}'
     except Exception as e:
         return '{"Result": "Error", "Message": "' + str(e) + '"}'
-
 @app.route("/delete", methods=['DELETE'])  # Delete Student
 def delete():
     try:
