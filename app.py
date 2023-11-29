@@ -74,18 +74,22 @@ def update():
     except Exception as e:
         return '{"Result": "Error", "Message": "' + str(e) + '"}'
 
-@app.route("/delete", methods=['DELETE'])  # Delete Student
+@app.route("/delete", methods=['DELETE'])
 def delete():
     try:
-        name = request.args.get('deleteName')
+        data = request.json
+        name = data['name']
 
         query = '''DELETE FROM students WHERE studentName='{}';'''.format(name)
         success = execute_query(query)
-        print(success)
-        return '{"Result": "Success"}'
 
+        if success:
+            return '{"Result": "Success"}'
+        else:
+            return '{"Result": "Error"}'
     except Exception as e:
         return '{"Result": "Error", "Message": "' + str(e) + '"}'
+
 
 
 @app.route("/default")  # Default - Show Data
