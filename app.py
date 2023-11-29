@@ -73,6 +73,7 @@ def update():
             return '{"Result": "Error"}'
     except Exception as e:
         return '{"Result": "Error", "Message": "' + str(e) + '"}'
+
 @app.route("/delete", methods=['DELETE'])  # Delete Student
 def delete():
     try:
